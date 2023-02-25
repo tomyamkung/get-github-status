@@ -27,7 +27,7 @@ jobs:
     steps:
       - name: Check-conf
         run: |
-          echo '${{ fromJSON(needs.set-config.outputs.confJson) }}' | jq .
+          echo '${{ fromJSON(needs.set-config.outputs.confJson) }}' | jq -c '.repository'
     # strategy:
     #   matrix:
     #     common-settings: [old,latest]
