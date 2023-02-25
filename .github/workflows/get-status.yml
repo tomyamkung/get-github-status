@@ -15,8 +15,11 @@ jobs:
       - name: Set configuration
         id: set-config
         run: |
-          cat config.json | tr -d '\n'
-          echo "confJson=$(cat config.json | tr -d '\n')" >> $GITHUB_OUTPUT
+          # cat config.json | tr -d '\n'
+          # echo "confJson=$(cat config.json | tr -d '\n')" >> $GITHUB_OUTPUT
+          echo '["hoge","fuga"]' | jq -c
+          list=$(echo '["hoge","fuga"]' | jq -c)
+          echo "confJson=${list}" >> $GITHUB_OUTPUT       
 
   get-status:
     needs: set-config
@@ -28,7 +31,7 @@ jobs:
     steps:
       - name: Check-conf
         run: |
-          echo '${{ fromJSON(needs.set-config.outputs.confJson ) }}' | jq -cR 'fromjson? | .repository'
+          echo '${{ fromJSON(needs.set-config.outputs.confJson ) }}' | jq .'
     # strategy:
     #   matrix:
     #     common-settings: [old,latest]
