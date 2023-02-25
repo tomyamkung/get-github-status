@@ -3,6 +3,8 @@ name: get-status
 on:
   push:
   workflow_dispatch:
+env:
+  date_cal: 500
 
 jobs:
   set-config:
@@ -33,4 +35,17 @@ jobs:
         run: |
           echo ${{ matrix.repo }}
           chmod +x ./tools/get-pr-created-date.sh
-          ./tools/get-pr-created-date.sh 500 ${{ matrix.repo }} ${{ secrets.GIT_PAT }}
+          ./tools/get-pr-created-date.sh ${{ env.date_cal }} ${{ matrix.repo }} ${{ secrets.GIT_PAT }}
+      - name: Checkout target repository
+        uses: actions/checkout@v3
+        with:
+          repository: ${{ matrix.repo }}
+          fetch-depth: 0
+          token: ${{ secrets.GIT_PAT }}
+          path: target
+      - name: Check developper
+        run: |
+          cd ${{ github.workspace }}/target
+          echo "start showing developper"
+          git log | git shortlog -nse
+          echo "finish showing developper" 
