@@ -17,8 +17,8 @@ jobs:
         run: |
           # cat config.json | tr -d '\n'
           # echo "confJson=$(cat config.json | tr -d '\n')" >> $GITHUB_OUTPUT
-          cat conf.json | tr -d '\n' | jq -c
-          list=$(cat conf.json | tr -d '\n' | jq -c)
+          cat config.json | tr -d '\n' | jq -c
+          list=$(cat config.json | tr -d '\n' | jq -c)
           echo "confJson=${list}" >> $GITHUB_OUTPUT       
 
   get-status:
