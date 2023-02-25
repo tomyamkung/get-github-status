@@ -31,7 +31,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        hoge: ${{fromJson(needs.set-matrix.outputs.confJson)}}
+        hoge: ${{fromJson(needs.set-config.outputs.confJson)}}
     steps:
       - run: echo ${{ matrix.hoge }}
     # strategy:
