@@ -8,7 +8,7 @@ jobs:
   set-config:
     runs-on: ubuntu-latest
     outputs:
-      set-config: ${{ steps.set-config.outputs.value }}
+      confJson: ${{ steps.set-config.outputs.confJson }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -23,7 +23,7 @@ jobs:
     steps:
       - name: Check-conf
         run: |
-          echo ${{ fromJSON(needs.set-config.outputs.confJson ) }} 
+          echo ${{ fromJSON(needs.set-config.outputs.confJson) }} 
     # strategy:
     #   matrix:
     #     common-settings: [old,latest]
