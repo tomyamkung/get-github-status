@@ -15,8 +15,6 @@ jobs:
       - name: Set configuration
         id: set-config
         run: |
-          # cat config.json | tr -d '\n'
-          # echo "confJson=$(cat config.json | tr -d '\n')" >> $GITHUB_OUTPUT
           cat config.json | tr -d '\n' | jq -c
           list=$(cat config.json | tr -d '\n' | jq -c)
           echo "confJson=${list}" >> $GITHUB_OUTPUT       
@@ -24,24 +22,12 @@ jobs:
   get-status:
     needs: set-config
     runs-on: ubuntu-latest
-    # strategy:
-    #   fail-fast: false
-    #   matrix:
-    #     hoge: ${{ fromJSON(needs.set-config.outputs.confJson) }}
     strategy:
       fail-fast: false
       matrix:
-        hoge: ${{fromJson(needs.set-config.outputs.confJson).repository}}
+        repo: ${{fromJson(needs.set-config.outputs.confJson).repository}}
     steps:
-      - run: echo ${{ matrix.hoge }}
-    # strategy:
-    #   matrix:
-    #     common-settings: [old,latest]
-    #     task: [test-build-job-A,test-build-job-B,integ-test]
-    #     include:
-    #       - task: test-build-job-A
-    #         config: settings-A
-    #       - task: test-build-job-B
-    #         config: settings-B
-    #       - task: integ-test
-    #         config: settings-integ
+      - name: Get pr-created-date
+        run: |
+          echo ${{ matrix.repo }}
+          ./tools/get-pr-created-date.sh 500 ${{ matrix.repo }}
