@@ -4,6 +4,6 @@ echo $calc_date
 
 pulls=$(curl \
         -H "Accept: application/vnd.github.v3+json" \
-        -H "Authorization: token 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" \
+        -H "Authorization: token $3" \
         https://api.github.com/repos/$2/pulls?state=all&pre_page=100)
 echo $pulls | jq --arg date $calc_date '.[] | select(.created_at >= $date) | .created_at'

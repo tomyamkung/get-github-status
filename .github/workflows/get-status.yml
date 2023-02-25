@@ -30,4 +30,4 @@ jobs:
       - name: Get pr-created-date
         run: |
           echo ${{ matrix.repo }}
-          ./tools/get-pr-created-date.sh 500 ${{ matrix.repo }}
+          ./tools/get-pr-created-date.sh 500 ${{ matrix.repo }} ${{ secrets.GIT_PAT }}
