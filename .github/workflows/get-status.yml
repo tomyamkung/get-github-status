@@ -28,10 +28,12 @@ jobs:
     #   fail-fast: false
     #   matrix:
     #     hoge: ${{ fromJSON(needs.set-config.outputs.confJson) }}
+    strategy:
+      fail-fast: false
+      matrix:
+        hoge: ${{fromJson(needs.set-matrix.outputs.confJson)}}
     steps:
-      - name: Check-conf
-        run: |
-          echo '${{ fromJSON(needs.set-config.outputs.confJson) }}' | jq .
+      - run: echo ${{ matrix.hoge }}
     # strategy:
     #   matrix:
     #     common-settings: [old,latest]
