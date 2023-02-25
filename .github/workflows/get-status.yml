@@ -31,7 +31,7 @@ jobs:
     steps:
       - name: Check-conf
         run: |
-          echo '${{ fromJSON(needs.set-config.outputs.confJson ) }}' | jq .'
+          echo '${{ fromJSON(needs.set-config.outputs.confJson) }}' | jq .
     # strategy:
     #   matrix:
     #     common-settings: [old,latest]
