@@ -20,10 +20,14 @@ jobs:
   get-status:
     needs: set-config
     runs-on: ubuntu-latest
+    # strategy:
+    #   fail-fast: false
+    #   matrix:
+    #     hoge: ${{ fromJSON(needs.set-config.outputs.confJson) }}
     steps:
       - name: Check-conf
         run: |
-          echo ${{ fromJSON(needs.set-config.outputs.confJson) }} 
+          echo ${{ fromJSON(needs.set-config.outputs.confJson).repository }} 
     # strategy:
     #   matrix:
     #     common-settings: [old,latest]
