@@ -49,3 +49,12 @@ jobs:
           echo "start showing developper"
           git log | git shortlog -nse
           echo "finish showing developper" 
+          cd ${{ github.workspace }}
+      - name: Setup-cloc
+        run: |
+          sudo apt-get update
+          sudo apt-get install cloc
+          cloc --version
+      - name: Check-lines-of-code
+        run: |
+          cloc ./target --vcs=git
