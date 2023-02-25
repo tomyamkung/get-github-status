@@ -27,6 +27,8 @@ jobs:
       matrix:
         repo: ${{fromJson(needs.set-config.outputs.confJson).repository}}
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
       - name: Get pr-created-date
         run: |
           echo ${{ matrix.repo }}
