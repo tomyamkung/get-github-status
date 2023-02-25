@@ -1,0 +1,37 @@
+---
+name: get-status
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  set-config:
+    runs-on: ubuntu-latest
+    outputs:
+      set-config: ${{ steps.set-config.outputs.value }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Set configuration
+        id: set-config
+        run: |
+          echo "confJson=$(cat config.json | tr -d '\n')" >> $GITHUB_OUTPUT
+
+  get-status:
+    needs: set-config
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check-conf
+        run: |
+          echo ${{ fromJSON(needs.set-config.outputs.confJson ) }} 
+    # strategy:
+    #   matrix:
+    #     common-settings: [old,latest]
+    #     task: [test-build-job-A,test-build-job-B,integ-test]
+    #     include:
+    #       - task: test-build-job-A
+    #         config: settings-A
+    #       - task: test-build-job-B
+    #         config: settings-B
+    #       - task: integ-test
+    #         config: settings-integ
